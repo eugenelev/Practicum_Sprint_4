@@ -86,16 +86,12 @@ public class OrderPage {
 
     // Метод заполнения поля - Метро
     public void setMetro(String metro) {
-        driver.findElement(fieldMetro).click();
-        driver.findElement(fieldMetro).sendKeys(metro, Keys.ARROW_DOWN, Keys.RETURN);;
-
+        driver.findElement(fieldMetro).sendKeys(metro, Keys.ARROW_DOWN,Keys.RETURN);
 
     }
 
     // Метод заполнения поля - Телефонный номер
-    public void setPhoneNumber(String phoneNumber) {
-        driver.findElement(fieldPhoneNumber).click();
-        driver.findElement(fieldPhoneNumber).clear();
+    public void setPhoneNumber(String phoneNumber){
         driver.findElement(fieldPhoneNumber).sendKeys(phoneNumber);
     }
 

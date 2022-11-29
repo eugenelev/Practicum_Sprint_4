@@ -6,6 +6,9 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.junit.Test;
 import org.junit.After;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import pages.BaseClass;
 import pages.MainPage;
 import java.util.concurrent.TimeUnit;
 import static org.junit.Assert.assertEquals;
@@ -14,7 +17,7 @@ import static org.junit.Assert.assertEquals;
 
 
 @RunWith(Parameterized.class)
-public class MainPageTests {
+public class MainPageTests extends BaseClass {
     private final String numberOfQuestionAndAnswer;
     private final String expectedText;
 
@@ -25,7 +28,7 @@ public class MainPageTests {
 
     // Тестовые данные
     @Parameterized.Parameters
-    public static Object[][] getCredentials() {
+    public static Object[][] getFaqAnswers() {
         return new Object[][] {
                 { "0", "Сутки — 400 рублей. Оплата курьеру — наличными или картой."},
                 { "1", "Пока что у нас так: один заказ — один самокат. Если хотите покататься с друзьями, можете просто сделать несколько заказов — один за другим."},
@@ -43,11 +46,14 @@ public class MainPageTests {
 
     @Test
     public void openTheRequiredAnswerByClickingOnTheQuestionTest() {
-        driver = new ChromeDriver();
+        driver = getDriver("chrome");
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        driver.get("https://qa-scooter.praktikum-services.ru/");
-        driver.findElement(By.xpath("//button[contains(text(), 'да все привыкли')]")).click();
+        driver.get(URL);
         MainPage mainPage = new MainPage(driver);
+        new WebDriverWait(driver, 5)
+                .until(ExpectedConditions.presenceOfElementLocated(mainPage.sectionQuestionAboutImportant));
+        driver.get(URL);
+        driver.findElement(By.xpath("//button[contains(text(), 'да все привыкли')]")).click();
         mainPage.scrollToElement(mainPage.sectionQuestionAboutImportant);
         mainPage.clickOneOfTheQuestions(numberOfQuestionAndAnswer);
         String textAnswerOfQuesiton = mainPage.getTextFromElement(numberOfQuestionAndAnswer);
