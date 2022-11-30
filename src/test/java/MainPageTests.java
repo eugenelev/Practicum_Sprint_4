@@ -1,11 +1,9 @@
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-import org.openqa.selenium.By;
 import org.junit.Test;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import pages.MainPage;
-import java.util.concurrent.TimeUnit;
 import static org.junit.Assert.assertEquals;
 
 
