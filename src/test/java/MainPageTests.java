@@ -1,14 +1,9 @@
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.junit.Test;
-import org.junit.After;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import pages.BaseClass;
 import pages.MainPage;
 import java.util.concurrent.TimeUnit;
 import static org.junit.Assert.assertEquals;
@@ -17,7 +12,7 @@ import static org.junit.Assert.assertEquals;
 
 
 @RunWith(Parameterized.class)
-public class MainPageTests extends BaseClass {
+public class MainPageTests extends BaseTest {
     private final String numberOfQuestionAndAnswer;
     private final String expectedText;
 
@@ -41,29 +36,19 @@ public class MainPageTests extends BaseClass {
 
         };
     }
-    private WebDriver driver;
 
 
     @Test
     public void openTheRequiredAnswerByClickingOnTheQuestionTest() {
-        driver = getDriver("chrome");
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        driver.get(URL);
         MainPage mainPage = new MainPage(driver);
         new WebDriverWait(driver, 5)
                 .until(ExpectedConditions.presenceOfElementLocated(mainPage.sectionQuestionAboutImportant));
         driver.get(URL);
-        driver.findElement(By.xpath("//button[contains(text(), 'да все привыкли')]")).click();
         mainPage.scrollToElement(mainPage.sectionQuestionAboutImportant);
         mainPage.clickOneOfTheQuestions(numberOfQuestionAndAnswer);
         String textAnswerOfQuesiton = mainPage.getTextFromElement(numberOfQuestionAndAnswer);
         assertEquals(expectedText, textAnswerOfQuesiton);
 
 
-    }
-    @After
-    public void tearDown() {
-// Закрыть браузер
-        driver.quit();
     }
 }

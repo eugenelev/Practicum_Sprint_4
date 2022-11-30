@@ -9,7 +9,10 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 public class MainPage{
 
 
-    private WebDriver driver;
+    private static WebDriver driver;
+
+    // Локатор кнопки принятия кук
+    public By acceptCookies = By.xpath("//button[contains(text(), 'да все привыкли')]");
 
     // Локатор секции "Вовпросы о важном"
     public By sectionQuestionAboutImportant = By.xpath(".//*[@class= 'Home_SubHeader__zwi_E' and text()='Вопросы о важном']");
@@ -54,6 +57,11 @@ public class MainPage{
 
     }
 
+
+    public void clickAcceptCookies() {
+        driver.findElement(acceptCookies).click();
+
+    }
 
 
 
